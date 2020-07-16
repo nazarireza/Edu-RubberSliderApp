@@ -1,5 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import Slider from './Slider';
 
 export default () => {
   return (
@@ -9,6 +10,7 @@ export default () => {
           <Text style={styles.titleText}>Price Range</Text>
           <Text style={styles.valueRangeText}>$0 - $0</Text>
           <Text style={styles.currentValueText}>Current Range: $0</Text>
+          <Slider />
         </View>
       </SafeAreaView>
     </>
