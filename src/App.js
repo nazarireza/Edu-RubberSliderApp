@@ -1,26 +1,56 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 
-function App() {
+export default () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.canvasContainer}>
+          <Text style={styles.titleText}>Price Range</Text>
+          <Text style={styles.valueRangeText}>$0 - $0</Text>
+          <Text style={styles.currentValueText}>Current Range: $0</Text>
+        </View>
+      </SafeAreaView>
+    </>
   );
-}
+};
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#cfd9ed',
+  },
+  canvasContainer: {
+    backgroundColor: '#FFFFFF',
+    width: 350,
+    borderRadius: 8,
+    paddingHorizontal: 35,
+    paddingVertical: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+
+    elevation: 4,
+  },
+  titleText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '3rgba(0,0,0,.7)',
+  },
+  valueRangeText: {
+    color: '#495fde',
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginTop: 20,
+  },
+  currentValueText: {
+    color: 'rgba(0,0,0,.4)',
+    marginVertical: 10,
+  },
+});
