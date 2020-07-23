@@ -12,11 +12,25 @@ import { useValues } from 'react-native-redash';
 import { State } from 'react-native-gesture-handler';
 import Svg from 'react-native-svg';
 import SliderLine from './SliderLine';
-import { add } from 'react-native-reanimated';
+import {
+  add,
+  useCode,
+  block,
+  cond,
+  eq,
+  and,
+  greaterOrEq,
+  sub,
+  set,
+  lessOrEq,
+  divide,
+  round,
+  multiply,
+} from 'react-native-reanimated';
 
 const MIDDLE_OF_CONTAINER_Y = CANVAS_HEIGHT / 2 - INDICATOR_SIZE / 2;
 
-export default () => {
+export default ({ start, end, max }) => {
   const [containerLayout, setContainerLayout] = useState({
     width: 0,
     height: 0,
@@ -36,6 +50,42 @@ export default () => {
     CANVAS_HEIGHT / 2 - INDICATOR_SIZE / 2,
     State.UNDETERMINED
   );
+  useCode(() => {
+    return block([
+      cond(
+        and(
+          eq(leftIndicatorState, State.ACTIVE),
+          greaterOrEq(leftIndicatorX, sub(rightIndicatorX, INDICATOR_SIZE))
+        ),
+        set(rightIndicatorX, add(leftIndicatorX, INDICATOR_SIZE))
+      ),
+      cond(
+        and(
+          eq(rightIndicatorState, State.ACTIVE),
+          lessOrEq(rightIndicatorX, add(leftIndicatorX, INDICATOR_SIZE))
+        ),
+        set(leftIndicatorX, sub(rightIndicatorX, INDICATOR_SIZE))
+      ),
+      set(
+        start,
+        round(
+          divide(
+            multiply(add(leftIndicatorX, INDICATOR_SIZE / 2), max),
+            containerLayout.width
+          )
+        )
+      ),
+      set(
+        end,
+        round(
+          divide(
+            multiply(add(rightIndicatorX, INDICATOR_SIZE / 2), max),
+            containerLayout.width
+          )
+        )
+      ),
+    ]);
+  }, [containerLayout]);
   return (
     <View
       style={styles.container}
